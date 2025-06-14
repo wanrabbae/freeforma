@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -52,7 +53,7 @@
     <div class="container">
       <div>
         <img src="../assets/logo-white.png" alt="FF" width="30" height="30" class="">
-        <a class="navbar-brand" href="index.php" style="font-family: 'Edu VIC WA NT Hand Pre', cursive; font-weight: bold;">FreeForma</a>
+        <a class="navbar-brand" href="index.php" style="font-weight: bold;">FreeForma</a>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -69,7 +70,12 @@
             <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Tentang' ? 'active' : '' ?>" href="about.php?title=Tentang">Tentang</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Masuk' ? 'active' : '' ?>" href="login.php?title=Masuk">Masuk</a>
+            <?php
+            if (isset($_SESSION['user_id'])): ?>
+              <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Profil' ? 'active' : '' ?>" href="<?= $_SESSION['role'] === 'admin' ? 'admin/index.php?title=Dashboard' : 'user/user_profile.php?title=Profil' ?>">Profil</a>
+            <?php else: ?>
+              <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Masuk' ? 'active' : '' ?>" href="login.php?title=Masuk">Masuk</a>
+            <?php endif; ?>
           </li>
         </ul>
       </div>

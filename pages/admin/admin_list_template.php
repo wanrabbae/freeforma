@@ -19,7 +19,7 @@
           <th>Author</th>
           <th>Like Count</th>
           <th>Download Count</th>
-          <th>Created At</th>
+          <th>Tanggal</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -39,11 +39,10 @@
           echo '<td>' . htmlspecialchars($row['author']) . '</td>';
           echo '<td>' . (int)$row['likeCount'] . '</td>';
           echo '<td>' . (int)$row['downloadCount'] . '</td>';
-          echo '<td>' . htmlspecialchars($row['createdAt']) . '</td>';
-          // Action buttons for download, detail, and delete, and modal details
+          echo '<td>' . htmlspecialchars(date('d M Y', strtotime($row['createdAt']))) . '</td>';
           echo '<td>
-            <a href="download_template.php?id=' . $row['id'] . '" class="btn btn-info btn-sm mb-1">Download</a>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#templateModal' . $row['id'] . '">Detail</button>
+            <a href="download_template.php?id=' . $row['id'] . '" class="btn btn-info btn-sm ">Download</a>
+            <button class="btn btn-warning text-dark btn-sm" data-bs-toggle="modal" data-bs-target="#templateModal' . $row['id'] . '">Detail</button>
             <a href="delete_template.php?id=' . $row['id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this template?\')">Delete</a>
             <div class="modal fade" id="templateModal' . $row['id'] . '" tabindex="-1" aria-labelledby="templateModalLabel' . $row['id'] . '" aria-hidden="true">
               <div class="modal-dialog modal-lg">
@@ -58,7 +57,7 @@
                     <p><strong>Like Count:</strong> ' . (int)$row['likeCount'] . '</p>
                     <p><strong>Download Count:</strong> ' . (int)$row['downloadCount'] . '</p>
                     <p><strong>Created At:</strong> ' . htmlspecialchars($row['createdAt']) . '</p>
-                    <p><strong>Description:</strong> ' . htmlspecialchars($row['description']) . '</p>
+                    <p><strong>Description:</strong> ' . htmlspecialchars($row['deskripsi']) . '</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

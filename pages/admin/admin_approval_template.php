@@ -17,7 +17,7 @@
           <th>Template Name</th>
           <th>Author</th>
           <th>Approval Status</th>
-          <th>Created At</th>
+          <th>Tanggal</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -37,12 +37,12 @@
           echo '<td>' . htmlspecialchars($row['templateName']) . '</td>';
           echo '<td>' . htmlspecialchars($row['author']) . '</td>';
           echo '<td>' . htmlspecialchars($row['approvalStatus']) . '</td>';
-          echo '<td>' . htmlspecialchars($row['createdAt']) . '</td>';
+          echo '<td>' . htmlspecialchars(date('d M Y', strtotime($row['createdAt']))) . '</td>';
           echo '<td>
-            <a href="download_template.php?id=' . $row['id'] . '" class="btn btn-info btn-sm mb-1">Download</a>
+            <a href="download_template.php?id=' . $row['id'] . '" class="btn btn-info btn-sm ">Download</a>
             <a href="delete_template.php?id=' . $row['id'] . '" class="btn btn-success btn-sm" onclick="return confirm(\'Are you sure you want to approve this template?\')">Approve</a>
             <a href="delete_template.php?id=' . $row['id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to reject this template?\')">Reject</a>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#templateModal' . $row['id'] . '">Detail</button>
+            <button class="btn btn-warning text-dark btn-sm" data-bs-toggle="modal" data-bs-target="#templateModal' . $row['id'] . '">Detail</button>
             <div class="modal fade" id="templateModal' . $row['id'] . '" tabindex="-1" aria-labelledby="templateModalLabel' . $row['id'] . '" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -56,7 +56,7 @@
                     <p><strong>Like Count:</strong> ' . (int)$row['likeCount'] . '</p>
                     <p><strong>Download Count:</strong> ' . (int)$row['downloadCount'] . '</p>
                     <p><strong>Created At:</strong> ' . htmlspecialchars($row['createdAt']) . '</p>
-                    <p><strong>Description:</strong> ' . htmlspecialchars($row['description']) . '</p>
+                    <p><strong>Description:</strong> ' . htmlspecialchars($row['deskripsi']) . '</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
