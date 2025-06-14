@@ -6,7 +6,7 @@ CREATE TABLE `User` (
   `password` varchar(255),
   `role` enum('user','admin'),
   `isActive` boolean DEFAULT true,
-  resetPasswordToken varchar(255) DEFAULT NULL,
+  `resetPasswordToken` varchar(255) DEFAULT NULL,
 );
 
 CREATE TABLE `Template` (
