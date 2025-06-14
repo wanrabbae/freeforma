@@ -4,7 +4,9 @@ CREATE TABLE `User` (
   `email` varchar(255),
   `foto` varchar(255),
   `password` varchar(255),
-  `role` enum('user','admin')
+  `role` enum('user','admin'),
+  `isActive` boolean DEFAULT true,
+  resetPasswordToken varchar(255) DEFAULT NULL,
 );
 
 CREATE TABLE `Template` (
