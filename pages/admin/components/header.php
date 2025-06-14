@@ -70,7 +70,7 @@
             <a class="nav-link <?= !isset($_GET['title']) || $_GET['title'] === 'Dashboard' ? 'active' : '' ?>" aria-current="page" href="index.php?title=Dashboard">Dashboard</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Profile' ? 'active' : '' ?>" href="admin_profile.php?title=Profile">Profile</a>
+            <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Profile' ? 'active' : '' ?>" href="admin_profile.php?title=Profile">Profil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Users' ? 'active' : '' ?>" href="admin_users.php?title=Users">Users</a>
@@ -79,7 +79,18 @@
             <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Templates' ? 'active' : '' ?>" href="admin_list_template.php?title=Templates">Templates</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Approval Template' ? 'active' : '' ?>" href="admin_approval_template.php?title=Approval Template">Approval Template</a>
+            <a class="nav-link <?= isset($_GET['title']) && $_GET['title'] === 'Approval Template' ? 'active' : '' ?>" href="admin_approval_template.php?title=Approval Template">Approval Template
+              <?php
+              $query = "SELECT COUNT(*) as pending_count FROM Template WHERE approvalStatus = 'pending'";
+              $result = mysqli_query($koneksi, $query);
+              $row = mysqli_fetch_assoc($result);
+              $pendingCount = $row['pending_count'];
+
+              if ($pendingCount > 0) {
+                echo '<span class="badge bg-danger">' . $pendingCount . '</span>';
+              }
+              ?>
+            </a>
           </li>
         </ul>
       </div>
