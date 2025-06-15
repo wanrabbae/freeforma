@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row align-items-center min-vh-75">
             <div class="col-lg-6">
-                <h1 class="hero-title">Temukan Template <span class="text-primary">Word & LaTeX</span> Terbaik</h1>
+                <h1 class="hero-title">Temukan Template <span class="text-primary">PDF, Word, LaTeX, & PPT</span> Terbaik</h1>
                 <p class="hero-subtitle">Ribuan template dokumen akademik siap pakai untuk skripsi, jurnal, laporan, dan CV. Gratis dan open source!</p>
                 <div class="hero-search">
                     <div class="input-group input-group-lg">
@@ -113,12 +113,15 @@
             <?php
             $query = "
                 SELECT 
+                    t.id,                    
                     t.coverImage, 
                     t.templateName, 
                     t.fileTemplate, 
                     t.downloadCount, 
                     t.likeCount, 
-                    t.category, 
+                    t.category,
+                    t.createdAt,
+                    t.deskripsi, 
                     u.fullname AS author
                 FROM Template t
                 LEFT JOIN User u ON t.author = u.id
@@ -155,7 +158,7 @@
                         </div>
                         <div class="template-info">
                             <div class="template-overlay">
-                                <button class="btn btn-light btn-sm"><i class="fas fa-eye"></i> Preview</button>
+                                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#templateModal<?= $row['id'] ?>"><i class="fas fa-eye"></i> Preview</button>
                             </div>
                             <div class="template-type">
                                 <?php echo $fileTypeBadge($row['fileTemplate']); ?>
@@ -168,12 +171,41 @@
                                 <span><i class="fas fa-tag text-secondary"></i> <?php echo htmlspecialchars($row['category']); ?></span>
                             </div>
                             <div class="template-actions mt-3">
-                                <a href="download.php?file=<?php echo urlencode($row['fileTemplate']); ?>" class="btn btn-primary btn-sm flex-fill me-2">
+                                <a href="preview-file.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm flex-fill me-2">
                                     <i class="fas fa-download"></i> Download
                                 </a>
                                 <button class="btn btn-outline-danger btn-sm">
                                     <i class="fas fa-heart"></i>
                                 </button>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="templateModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="templateModalLabel<?= $row['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="templateModalLabel<?= $row['id'] ?>"><?= htmlspecialchars($row['templateName']) ?></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="../templates/covers/<?= htmlspecialchars($row['coverImage']) ?>" alt="Cover" class="img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                        <p><strong>Author:</strong> <?= htmlspecialchars($row['author']) ?></p>
+                                        <p><strong>Category:</strong> <?= htmlspecialchars($row['category']) ?></p>
+                                        <p><strong>Like Count:</strong> <i class="bi bi-heart-fill text-danger"></i>
+                                            <?= (int)$row['likeCount'] ?></p>
+                                        <p><strong>Download Count:</strong> <i class="bi bi-download text-primary"></i>
+                                            <?= (int)$row['downloadCount'] ?></p>
+                                        <p><strong>Tanggal Publish:</strong> <?= date('d M Y', strtotime($row['createdAt'])) ?>
+                                        <p><strong>Deskripsi:</strong>
+                                            <hr>
+                                            <?= $row['deskripsi'] ?>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="./preview-file.php?id=<?= $row['id'] ?>" class="btn btn-success"><i class="fas fa-download"></i> Download Template</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -197,12 +229,16 @@
             <?php
             $query = "
                 SELECT 
+                    t.id,                    
                     t.coverImage, 
                     t.templateName, 
                     t.fileTemplate, 
                     t.downloadCount, 
                     t.likeCount, 
-                    t.category, 
+                    t.category,
+                    t.category,
+                    t.createdAt,
+                    t.deskripsi,  
                     u.fullname AS author
                 FROM Template t
                 LEFT JOIN User u ON t.author = u.id
@@ -220,7 +256,7 @@
                         </div>
                         <div class="template-info">
                             <div class="template-overlay">
-                                <button class="btn btn-light btn-sm"><i class="fas fa-eye"></i> Preview</button>
+                                <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#templateModal<?= $row['id'] ?>"><i class="fas fa-eye"></i> Preview</button>
                             </div>
                             <div class="template-type">
                                 <?php echo $fileTypeBadge($row['fileTemplate']); ?>
@@ -233,12 +269,41 @@
                                 <span><i class="fas fa-tag text-secondary"></i> <?php echo htmlspecialchars($row['category']); ?></span>
                             </div>
                             <div class="template-actions mt-3">
-                                <a href="download.php?file=<?php echo urlencode($row['fileTemplate']); ?>" class="btn btn-primary btn-sm flex-fill me-2">
+                                <a href="preview-file.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm flex-fill me-2">
                                     <i class="fas fa-download"></i> Download
                                 </a>
                                 <button class="btn btn-outline-danger btn-sm">
                                     <i class="fas fa-heart"></i>
                                 </button>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="templateModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="templateModalLabel<?= $row['id'] ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="templateModalLabel<?= $row['id'] ?>"><?= htmlspecialchars($row['templateName']) ?></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="../templates/covers/<?= htmlspecialchars($row['coverImage']) ?>" alt="Cover" class="img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                        <p><strong>Author:</strong> <?= htmlspecialchars($row['author']) ?></p>
+                                        <p><strong>Category:</strong> <?= htmlspecialchars($row['category']) ?></p>
+                                        <p><strong>Like Count:</strong> <i class="bi bi-heart-fill text-danger"></i>
+                                            <?= (int)$row['likeCount'] ?></p>
+                                        <p><strong>Download Count:</strong> <i class="bi bi-download text-primary"></i>
+                                            <?= (int)$row['downloadCount'] ?></p>
+                                        <p><strong>Tanggal Publish:</strong> <?= date('d M Y', strtotime($row['createdAt'])) ?>
+                                        <p><strong>Deskripsi:</strong>
+                                            <hr>
+                                            <?= $row['deskripsi'] ?>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a href="./preview-file.php?id=<?= $row['id'] ?>" class="btn btn-success"><i class="fas fa-download"></i> Download Template</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

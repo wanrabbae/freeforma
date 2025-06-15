@@ -10,6 +10,10 @@ if (isset($_GET['id'])) {
     $template = mysqli_fetch_assoc($result);
     $filePath = '../templates/files/' . $template['fileTemplate'];
 
+    // Update download count
+    $insertDownload = "INSERT INTO TemplateDownloads (userId, templateId, download) VALUES (null, '$templateId', true)";
+    mysqli_query($koneksi, $insertDownload);
+
     if (file_exists($filePath)) {
       header('Content-Type: application/octet-stream');
       header('Content-Disposition: attachment; filename="' . basename($filePath) . '"');
@@ -17,11 +21,14 @@ if (isset($_GET['id'])) {
       readfile($filePath);
       exit;
     } else {
-      echo "File tidak ditemukan.";
+      echo "<script>alert('File tidak ditemukan.');</script>";
+      echo "<script>window.location.href = 'templates.php?title=Templates';</script>";
     }
   } else {
-    echo "Template tidak ditemukan.";
+    echo "<script>alert('Template tidak ditemukan.');</script>";
+    echo "<script>window.location.href = 'templates.php?title=Templates';</script>";
   }
 } else {
-  echo "ID template tidak diberikan.";
+  echo "<script>alert('ID template tidak diberikan.');</script>";
+  echo "<script>window.location.href = 'templates.php?title=Templates';</script>";
 }

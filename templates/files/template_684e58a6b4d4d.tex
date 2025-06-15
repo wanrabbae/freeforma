@@ -1,0 +1,233 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% Please do not remove this header.
+%%%
+%%% This is official version of the template that should be used to prepare 
+%%% a manuscript to be submitted to the HNPS Advances in Nuclear Physics
+%%% (ISBN print: 2654-007X, online: 2654-0088; abbrv. HNPS Adv. Nucl. Phys.)
+%%% The journal is the official publication of the Hellenic Nuclear Physics Society
+%%% established in 1990 and is indexed in Scopus
+%%% Information about the journal (incl. submission links) can be found here: 
+%%% https://eproceedings.epublishing.ekt.gr/index.php/hnps/index
+%%%
+%%% Template created by Theo J. Mertzimekis (tmertzi@phys.uoa.gr)
+%%% v.1 2025-06-06
+%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[
+  manuscript=article,  %% article
+%  layout=preprint,  %% preprint (for submission) or publish (for publisher only and after acceptance)
+  layout=publish,  %% preprint (for submission) or publish (for publisher only and after acceptance)
+  year=20XX,
+  volume=XX,
+%  IssueNumber=x
+]{extras/hnpsanp}
+
+
+\doi{~10.12681/hnpsanp.XXXX}
+
+% only used by journal admin (changed to reflect the first page of the article)
+\StartPage{1}
+
+
+\received {1 April 20xx}
+\accepted {10 May 20xx}
+\published{20 May 20xx}
+
+
+
+% --- blew is the area for authors ---
+
+% remove the following two packages, and delete all \blindtext commands
+\usepackage[english]{babel} 
+\usepackage{blindtext}
+\usepackage[right]{lineno}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{isotope}
+
+% specify the .bib file for references
+\addbibresource{HNPS-refs.bib} 
+
+
+% Make sure your article tile is within 12 words
+\title{Using a concise title for your HNPS Adv. Nucl. Phys. article. Try to stay within 2 lines.}
+
+\author{F. Author}
+\affiliation{Institution-1, City, Country}
+\email{correspondence@email.domain}
+
+\author{S.B. Author}
+\affiliation{Institution-2, City, Country}
+
+\author{T.-H. Author}
+\alsoaffiliation{Institution-1, City, Country}
+\affiliation{Institution-3, City, Country}
+
+
+% maximum five keywords
+\keywords{keyword 1; keyword 2; keyword-3 (include max 5)} 
+
+
+
+\begin{document}
+
+\linenumbers
+
+\begin{abstract}
+  An abstract summarizes in one paragraph with 300 words or less, the major aspects of the entire paper. They often include: 1) the overall purpose of the study and the research problem you investigated; 2) the basic design of you research approach; 3) major findings as a result of your analysis; and, 4) a brief summary of your interpretations and conclusions. 
+\end{abstract}
+
+
+\section{Introduction}
+
+\blindtext 
+open data in science~\cite{Mavrommatis_Clark_1990}.
+
+
+\blindtext [2]
+
+
+\section{Materials and Methods}
+
+\subsection{Methods part 1}
+
+\blindtext The end result is in Fig.~\ref{fig:logo}.
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=0.45\textwidth]{example-image}
+  \caption{An Example Figure}
+  \label{fig:logo}
+\end{figure}
+
+\blindtext\footnote{This is how a footnote works. Remove this line in the source code if you do not need it.}
+
+\subsection{Methods part 2}
+
+\subsubsection{Methods part 2.1}
+\blindtext
+This is an example of a figure with multiple subfigures. The user can define the relative widths and subcaptions.
+\begin{figure}
+     \centering
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{extras/logo_hnpsanp_header.png}
+         \caption{Subfigure 1}
+         \label{fig:subfig1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{extras/logo_hnpsanp_header.png}
+         \caption{Subfigure 2}
+         \label{fig:subfig2}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{extras/logo_hnpsanp_header.png}
+         \caption{Subfigure 3}
+         \label{fig:subfig3}
+     \end{subfigure}
+        \caption{Three simple graphs}
+        \label{fig:main_figure_label}
+\end{figure}
+
+Below are some examples on how you should write equations. Here is typical example of an equation~\eqref{eq:cauchy_momentum}
+%
+\begin{equation}
+\rho\frac{\mathrm{D} \mathbf{u}}{\mathrm{D} t} = - \nabla p + \nabla \cdot \boldsymbol \tau + \rho\,\mathbf{g}
+\label{eq:cauchy_momentum}
+\end{equation}
+%
+Here is an example of a single equation without numbering:
+\[
+\cos^2x+\sin^2x=1
+\label{eq:trigon}
+\]
+%
+Here is an example of multiple equations, aligned at the `=` sign and numbering only at the last equation of the bunch.
+%
+\begin{align}
+    3x^2-4y+2 &=e^{y^2} \nonumber\\
+    3x^2 &=4y-2+e^{y^2}\nonumber\\
+    x &=\pm\sqrt{\frac{1}{3}\left(2+4y+e^{y^2}\right)}
+    \label{eq:multi}
+\end{align}
+
+\subsubsection{Methods part2.2}
+
+\blindtext Table \ref{tb:example_table} shows an example.
+
+\begin{table}[H]
+  \centering
+  \small
+  \caption{Example table}
+  \label{tb:example_table}
+  \begin{tabular}{lll}
+  \toprule
+  \textbf{Parameter} & \textbf{Notation} & \textbf{Remarks} \\
+  \midrule
+  name & - & engine common identifier \\
+  manufacture & - & name of the manufacture  \\
+  bpr & $\lambda$ & bypass ratio \\
+  pr & - & pressure ratio \\
+  thrust & $T_0$ & maximum static thrust\\
+  \bottomrule
+  \end{tabular}
+\end{table}
+
+\blindtext
+
+
+\section{Results and Discussion}
+
+\paragraph{Paragraph title} This is the paragraph with title if you want to use such function in the paper. \blindtext
+
+
+\section{Conclusion}
+
+\blindtext
+
+
+\section*{How to prepare your Reference list}
+
+The Reference list is prepared using the bib\TeX\ format. A HNPS-refs.bib file is provided in this template as a basic example.
+Modern literature management software such as Zotero, JabRef, Mendeley etc provide .bib files from their Export function. Please
+refer to \href{https://www.overleaf.com/learn/latex/Bibliography_management_in_LaTeX}{this guide} on how to prepare, cite and
+format your lists of citations. References are shown in a numeric style, here is an example~\cite{python}.
+
+%\section{Supplementary tables}
+%\blindtext
+
+
+\section*{Acknowledgements}
+Include your acknowledgement in this section.
+
+
+\section*{Funding statement}
+When applicable, please specify the funding information for this research, else remove the section completely
+
+
+
+% the bibliography is included in the HNPS-refs.bib file
+\scriptsize
+\printbibliography
+\normalsize
+
+\appendix
+
+\section{This is an appendix, if you need it}
+
+This is an appendix section to provide supplementary material, if you wish. An appendix can have multiple chapters and sections. Here it includes some text and a version of the HNPS logo, shown in Fig.~\ref{fig:appx}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{extras/logo_hnpsanp_header.png}
+\caption{The HNPS ANP logo}
+\label{fig:appx}
+\end{figure}
+
+
+\end{document}

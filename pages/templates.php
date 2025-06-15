@@ -57,13 +57,16 @@
     $totalPages = ceil($totalTemplates / $perPage);
 
     // Fetch paginated templates
-    $sqlQuery = "SELECT 
+    $sqlQuery = "SELECT
+            t.id, 
             t.coverImage, 
             t.templateName, 
             t.fileTemplate, 
             t.downloadCount, 
             t.likeCount, 
-            t.category, 
+            t.category,
+            t.createdAt,
+            t.deskripsi,  
             u.fullname AS author
           FROM Template t
           LEFT JOIN User u ON t.author = u.id
@@ -74,12 +77,15 @@
     if (isset($_GET['search']) && !empty($_GET['search'])) {
       $searchTerm = mysqli_real_escape_string($koneksi, $_GET['search']);
       $sqlQuery = "SELECT 
+            t.id,
             t.coverImage, 
             t.templateName, 
             t.fileTemplate, 
             t.downloadCount, 
             t.likeCount, 
-            t.category, 
+            t.category,
+            t.createdAt,
+            t.deskripsi,   
             u.fullname AS author
           FROM Template t
           LEFT JOIN User u ON t.author = u.id
@@ -149,7 +155,7 @@
                 <span><i class="fas fa-tag text-secondary"></i> <?php echo htmlspecialchars($row['category']); ?></span>
               </div>
               <div class="template-actions mt-3">
-                <a href="download.php?file=<?php echo urlencode($row['fileTemplate']); ?>" class="btn btn-primary btn-sm flex-fill me-2">
+                <a href="preview-file.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm flex-fill me-2">
                   <i class="fas fa-download"></i> Download
                 </a>
                 <button class="btn btn-outline-danger btn-sm">
