@@ -244,82 +244,28 @@ if (isset($_POST['updateProfile'])) {
         </div>
       </div>
 
-      <div class="card-group mt-2 col-12 d-flex justify-content-center gap-3">
-
-        <div class="card rounded-3 border-3 bg-dark shadow-sm text-white">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Template Title</h5>
-            <p class="card-text"></p>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-danger btn-like"><i class="bi bi-heart"></i></a>
-              <a href="#" class="text-primary btn-download"><i class="bi bi-download"></i></a>
-            </div>
-            <p class="card-text text-white"><small class="text-active">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-        <div class="card rounded-3 border-3 bg-dark shadow-sm text-white">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Template Title</h5>
-            <p class="card-text"></p>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-danger btn-like"><i class="bi bi-heart"></i></a>
-              <a href="#" class="text-primary btn-download"><i class="bi bi-download"></i></a>
-            </div>
-            <p class="card-text text-white"><small class="text-active">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-        <div class="card rounded-3 border-3 bg-dark shadow-sm text-white">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Template Title</h5>
-            <p class="card-text"></p>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-danger btn-like"><i class="bi bi-heart"></i></a>
-              <a href="#" class="text-primary btn-download"><i class="bi bi-download"></i></a>
-            </div>
-            <p class="card-text text-white"><small class="text-active">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-      </div>
-      <div class="card-group mt-3 col-12 d-flex justify-content-center gap-3">
-        <div class="card rounded-3 border-3 bg-dark shadow-sm text-white">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Template Title</h5>
-            <p class="card-text"></p>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-danger btn-like"><i class="bi bi-heart"></i></a>
-              <a href="#" class="text-primary btn-download"><i class="bi bi-download"></i></a>
-            </div>
-            <p class="card-text text-white"><small class="text-active">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-        <div class="card rounded-3 border-3 bg-dark shadow-sm text-white">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Template Title</h5>
-            <p class="card-text"></p>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-danger btn-like"><i class="bi bi-heart"></i></a>
-              <a href="#" class="text-primary btn-download"><i class="bi bi-download"></i></a>
-            </div>
-            <p class="card-text text-white"><small class="text-active">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-        <div class="card rounded-3 border-3 bg-dark shadow-sm text-white">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Template Title</h5>
-            <p class="card-text"></p>
-            <div class="d-flex gap-3">
-              <a href="#" class="text-danger btn-like"><i class="bi bi-heart"></i></a>
-              <a href="#" class="text-primary btn-download"><i class="bi bi-download"></i></a>
-            </div>
-            <p class="card-text text-white"><small class="text-active">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
+      <div class="row">
+        <?php
+        $query = "SELECT * FROM Template WHERE author = $userId AND approvalStatus = 'accepted' AND isActive = 1 ORDER BY downloadCount DESC LIMIT 8";
+        $result = mysqli_query($koneksi, $query);
+        if (mysqli_num_rows($result) > 0) {
+          while ($template = mysqli_fetch_assoc($result)) {
+            echo '<div class="col-md-3 mb-4">';
+            echo '<div class="card h-100 shadow-sm bg-dark text-white">';
+            echo '<img src="../../templates/covers/' . htmlspecialchars($template['coverImage']) . '" class="card-img-top" alt="Template Cover">';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">' . htmlspecialchars($template['templateName']) . '</h5>';
+            echo '<p class="card-text">Kategori: ' . htmlspecialchars($template['category']) . '</p>';
+            echo '<p class="card-text"><i class="bi bi-download"></i> ' . (int)$template['downloadCount'] . ' Downloads</p>';
+            echo '<p class="card-text text-white"><small class="text-active">Last updated ' . date('d M Y', strtotime($template['updatedAt'])) . '</small></p>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+          }
+        } else {
+          echo '<p>No templates found.</p>';
+        }
+        ?>
       </div>
     </div>
   </div>

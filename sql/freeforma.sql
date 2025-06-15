@@ -16,11 +16,13 @@ CREATE TABLE `Template` (
   `deskripsi` longtext,
   `coverImage` varchar(255),
   `fileTemplate` varchar(255),
-  `likeCount` int,
-  `downloadCount` int,
-  `approvalStatus` enum('pending','accepted','rejected'),
-  `createdAt` timestamp,
-  `updatedAt` timestamp
+  `likeCount` int DEFAULT 0,
+  `downloadCount` int DEFAULT 0,
+  `category` enum('Skripsi & Tesis','Jurnal & Artikel','CV Akademik & Resume','Presentasi','Lainnya') DEFAULT 'Lainnya',
+  `approvalStatus` enum('pending','accepted','rejected') DEFAULT 'pending',
+  `isActive` boolean DEFAULT true,
+  `createdAt` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 );
 
 CREATE TABLE `TemplateLikes` (

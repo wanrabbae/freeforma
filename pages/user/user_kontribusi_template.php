@@ -11,6 +11,7 @@ include '../koneksi.php';
 if (isset($_POST['createTemplate'])) {
   $templateName = mysqli_real_escape_string($koneksi, $_POST['templateName']);
   $deskripsi = mysqli_real_escape_string($koneksi, $_POST['deskripsi']);
+  $category = mysqli_real_escape_string($koneksi, $_POST['category']);
   $author = $_SESSION['user_id'];
   $createdAt = date('Y-m-d H:i:s');
 
@@ -45,8 +46,8 @@ if (isset($_POST['createTemplate'])) {
   }
 
   // Insert into database
-  $sql = "INSERT INTO Template (templateName, author, deskripsi, coverImage, fileTemplate, likeCount, downloadCount, createdAt)
-      VALUES ('$templateName', '$author', '$deskripsi', '$coverImagePath', '$fileTemplatePath', 0, 0, '$createdAt')";
+  $sql = "INSERT INTO Template (templateName, author, deskripsi, coverImage, fileTemplate, likeCount, downloadCount, category, createdAt)
+      VALUES ('$templateName', '$author', '$deskripsi', '$coverImagePath', '$fileTemplatePath', 0, 0, '$category', '$createdAt')";
   if (mysqli_query($koneksi, $sql)) {
     echo "<script>alert('Template berhasil diupload!');window.location.href='user_kontribusi_template.php';</script>";
     exit();
@@ -59,8 +60,12 @@ if (isset($_POST['updateTemplate'])) {
   $templateId = $_POST['templateId'];
   $templateName = mysqli_real_escape_string($koneksi, $_POST['templateName']);
   $deskripsi = mysqli_real_escape_string($koneksi, $_POST['deskripsi']);
+  $category = mysqli_real_escape_string($koneksi, $_POST['category']);
 
   $currentTemplate = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM Template WHERE id='$templateId'"));
+  $currentStatus = $currentTemplate['approvalStatus'];
+
+  if ($currentStatus === 'rejected') $currentStatus = 'pending';
 
   // Handle cover image upload
   $coverImagePath = '';
@@ -101,7 +106,9 @@ if (isset($_POST['updateTemplate'])) {
       templateName='$templateName', 
       deskripsi='$deskripsi', 
       coverImage='$coverImagePath', 
-      fileTemplate='$fileTemplatePath' 
+      fileTemplate='$fileTemplatePath',
+      category='$category',
+      approvalStatus='$currentStatus'
       WHERE id='$templateId'";
 
   if (mysqli_query($koneksi, $sql)) {
@@ -205,6 +212,7 @@ if (isset($_POST['deleteTemplate'])) {
             <th>Template Name</th>
             <th>Author</th>
             <th>Status</th>
+            <th>Aktif</th>
             <th>Download Count</th>
             <th>Tanggal</th>
             <th>Action</th>
@@ -233,6 +241,12 @@ if (isset($_POST['deleteTemplate'])) {
               echo '<span class="badge bg-danger">Rejected</span>';
             }
             echo '</td>';
+            echo '<td>';
+            if ($row['isActive'] == 1) {
+              echo '<span class="badge bg-success">Aktif</span>';
+            } else {
+              echo '<span class="badge bg-secondary">Tidak Aktif</span>';
+            }
             echo '<td>
               <i class="bi bi-download"></i>
             ' . (int)$row['downloadCount'] . '</td>';
@@ -255,6 +269,9 @@ if (isset($_POST['deleteTemplate'])) {
                   <div class="modal-body">
                     <img src="../../templates/covers/' . htmlspecialchars($row['coverImage']) . '" alt="Cover" class="img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                     <p><strong>Author:</strong> ' . htmlspecialchars($row['author']) . '</p>
+                    <p><strong>Approval Status:</strong> ' . htmlspecialchars($row['approvalStatus']) . '</p>
+                    <p><strong>Category:</strong> ' . htmlspecialchars($row['category']) . '</p>
+                    <p><strong>Aktif:</strong> ' . ($row['isActive'] ? 'Aktif' : 'Tidak Aktif') . '</p>
                     <p><strong>Like Count:</strong> ' . (int)$row['likeCount'] . '</p>
                     <p><strong>Download Count:</strong> ' . (int)$row['downloadCount'] . '</p>
                     <p><strong>Created At:</strong> ' . htmlspecialchars($row['createdAt']) . '</p>
@@ -297,8 +314,19 @@ if (isset($_POST['deleteTemplate'])) {
                         <textarea class="form-control" id="editDeskripsi' . $row['id'] . '" name="deskripsi" rows="5" required>' . $row['deskripsi'] . '</textarea>
                       </div>
                       <div class="mb-3">
+                        <label for="editCategory' . $row['id'] . '" class="form-label">Kategori</label>
+                        <select class="form-select" id="editCategory' . $row['id'] . '" name="category" required>
+                          <option value="" disabled>Pilih Kategori</option>
+                          <option value="Skripsi & Tesis"' . ($row['category'] == 'Skripsi & Tesis' ? ' selected' : '') . '>Skripsi & Tesis</option>
+                          <option value="Jurnal & Artikel"' . ($row['category'] == 'Jurnal & Artikel' ? ' selected' : '') . '>Jurnal & Artikel</option>
+                          <option value="CV Akademik & Resume"' . ($row['category'] == 'CV Akademik & Resume' ? ' selected' : '') . '>CV Akademik & Resume</option>
+                          <option value="Presentasi"' . ($row['category'] == 'Presentasi' ? ' selected' : '') . '>Presentasi</option>
+                          <option value="Lainnya"' . ($row['category'] == 'Lainnya' ? ' selected' : '') . '>Lainnya</option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
                         <label for="editFileTemplate' . $row['id'] . '" class="form-label">File Template (docx/pdf/latex)</label>
-                        <input class="form-control" type="file" id="editFileTemplate' . $row['id'] . '" name="fileTemplate" accept=".pdf,.docx,.tex" readonly>
+                        <input class="form-control" type="file" id="editFileTemplate' . $row['id'] . '" name="fileTemplate" accept=".pdf,.docx,.tex,.pptx" readonly>
                         <div class="mt-2" id="editFilePreviewContainer' . $row['id'] . '" style="display:none;">
                           <div id="editFilePreview' . $row['id'] . '"></div>
                         </div>
@@ -428,8 +456,19 @@ if (isset($_POST['deleteTemplate'])) {
               <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required></textarea>
             </div>
             <div class="mb-3">
+              <label for="category" class="form-label">Kategori</label>
+              <select class="form-select" id="category" name="category" required>
+                <option value="" disabled selected>Pilih Kategori</option>
+                <option value="Skripsi & Tesis">Skripsi & Tesis</option>
+                <option value="Jurnal & Artikel">Jurnal & Artikel</option>
+                <option value="CV Akademik & Resume">CV Akademik & Resume</option>
+                <option value="Presentasi">Presentasi</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div class="mb-3">
               <label for="fileTemplate" class="form-label">File Template (docx/pdf/latex)</label>
-              <input class="form-control" type="file" id="fileTemplate" name="fileTemplate" accept=".pdf,.docx,.tex" required>
+              <input class="form-control" type="file" id="fileTemplate" name="fileTemplate" accept=".pdf,.docx,.tex,.pptx" required>
               <div class="mt-2" id="filePreviewContainer" style="display:none;">
                 <div id="filePreview"></div>
               </div>
