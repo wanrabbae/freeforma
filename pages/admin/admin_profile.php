@@ -77,7 +77,7 @@ if (isset($_POST['updateProfile'])) {
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">New Password</label>
-              <input type="password" class="form-control" id="password" name="password">
+              <input type="password" class="form-control" id="password" name="password" pattern=".{8,}" title="minimal password 8 karakter">
             </div>
             <div class="mb-3">
               <label for="confirmPassword" class="form-label">Confirm Password</label>

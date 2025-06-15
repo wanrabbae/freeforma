@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['user_id'])) {
+  header("Location: ../login.php");
+  exit();
+}
+
+include '../koneksi.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,30 +19,35 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="icon" href="../../assets/logo-dark.png" type="image/png">
 </head>
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="#">FreeForma</a>
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <img src="../../assets/logo-white.png" alt="FF" width="30" height="30" class="">
+        FreeForma
+      </a>
       <div class="d-flex justify-content-between w-100 mr-4">
         <div class="collapse navbar-collapse d-flex justify-content-center mx-3" id="navbarSupportedContent">
-          <ul class="navbar-nav mb-2 mb-lg-0">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item me-3">
-              <a class="nav-link" aria-current="page" href="#">Template</a>
+              <a class="nav-link active" aria-current="page" href="./user_template_generator.php">Template Generator</a>
             </li>
             <li class="nav-item me-3">
-              <a class="nav-link" href="#">Contribution Template</a>
+              <a class="nav-link" href="./user_kontribusi_template.php">Kontribusi Template</a>
+            </li>
+            <li class="nav-item me-3">
+              <a class="nav-link" href="./user_profile.php">User Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">User Profile</a>
+              <a class="nav-link" href="../logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar?');">
+                <i class="fas fa-sign-out-alt"></i> Keluar
+              </a>
             </li>
           </ul>
         </div>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
@@ -84,50 +100,13 @@
     </div>
   </div>
 
-  <footer class="bg-dark text-white text-center py-5 mt-5 w-100" style="position: relative; left: 0; right: 0;">
-    <div class="container-fluid px-0">
-      <div class="row align-items-center mx-0">
-        <div class="col-12 col-md-4 mb-3 mb-md-0">
-          <div class="fw-bold mb-2">Contact Us</div>
-          <a href="https://x.com/username" target="_blank" class="text-white mx-2" title="X / Twitter">
-            <i class="bi bi-twitter-x" style="font-size: 2rem;"></i>
-          </a>
-          <a href="https://instagram.com/username" target="_blank" class="text-white mx-2" title="Instagram">
-            <i class="bi bi-instagram" style="font-size: 2rem;"></i>
-          </a>
-          <a href="https://wa.me/6281234567890" target="_blank" class="text-white mx-2" title="WhatsApp">
-            <i class="bi bi-whatsapp" style="font-size: 2rem;"></i>
-          </a>
-          <a href="tel:+6281234567890" class="text-white mx-2" title="Telepon">
-            <i class="bi bi-telephone" style="font-size: 2rem;"></i>
-          </a>
-          <a href="mailto:cs@freeforma.com" class="text-white mx-2" title="Customer Service Email">
-            <i class="bi bi-envelope" style="font-size: 2rem;"></i>
-          </a>
-        </div>
-        <div class="col-12 col-md-4 mb-3 mb-md-0">
-          <div class="fw-bold mb-2">Service</div>
-          <div>
-            <a href="#" class="text-white mx-2 text-decoration-none">FAQ</a> |
-            <a href="#" class="text-white mx-2 text-decoration-none">Help</a> |
-            <a href="#" class="text-white mx-2 text-decoration-none">About FreeForma</a>
-          </div>
-        </div>
-        <div class="col-12 col-md-4">
-          <button onclick="window.location.href='logout.php'" class="btn btn-success fw-bold px-4 py-2 mt-2">
-            <i class="bi bi-box-arrow-right me-2"></i>Get Out Application Now
-          </button>
-        </div>
-      </div>
-      <hr class="bg-secondary my-4">
-      <small style="font-size:1.1rem;">&copy; 2025 FreeForma. All rights reserved.</small>
-    </div>
-  </footer>
+  <br />
+  <?php include './components/footer.php' ?>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
   <script>
-    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const fileInput = document.getElementById('userFile');
       const file = fileInput.files[0];
@@ -161,11 +140,12 @@
     });
 
     // Handler tombol Generate & Convert
-    document.getElementById('btnGenerate').addEventListener('click', function () {
+    document.getElementById('btnGenerate').addEventListener('click', function() {
       // Silakan ganti aksi berikut sesuai kebutuhan backend/konversi file
       alert('Proses generate & convert file 1 dan 2 dimulai!');
       // Contoh: bisa AJAX ke backend untuk proses konversi, dsb.
     });
   </script>
 </body>
+
 </html>

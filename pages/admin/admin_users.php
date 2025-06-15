@@ -170,7 +170,7 @@ if (isset($_POST['deleteUser'])) {
           </div>
           <div class="mb-3" id="passwordField">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
+            <input type="password" class="form-control" id="password" name="password" required pattern=".{8,}" title="minimal password 8 karakter">
           </div>
           <div class="mb-3">
             <label for="foto" class="form-label">Profile Photo</label>

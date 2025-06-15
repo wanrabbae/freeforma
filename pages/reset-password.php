@@ -1,6 +1,13 @@
 <?php
 include './koneksi.php';
 include './components/header.php';
+
+if (isset($_SESSION['user_id'])) {
+  echo "<script>alert('Anda sudah masuk sebagai " . htmlspecialchars($_SESSION['role']) . "!');
+    window.location.href = 'index.php?title=Beranda';</script>";
+  exit();
+}
+
 if (!isset($_GET['token'])) {
   echo "<script>alert('Token tidak valid!'); window.location.href = 'login.php?title=Masuk';</script>";
   exit();
@@ -53,11 +60,11 @@ if (isset($_POST['resetPassword'])) {
         </div>
         <div class="mb-3">
           <label for="new_password" class="form-label">Password Baru</label>
-          <input type="password" class="form-control" id="new_password" name="new_password" required>
+          <input type="password" class="form-control" id="new_password" name="new_password" required pattern=".{8,}" title="minimal password 8 karakter">
         </div>
         <div class="mb-3">
           <label for="confirm_password" class="form-label">Konfirmasi Password Baru</label>
-          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required pattern=".{8,}" title="minimal password 8 karakter">
         </div>
         <button type="submit" class="btn btn-primary w-100" name="resetPassword">Reset Password</button>
       </form>

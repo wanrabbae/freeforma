@@ -33,13 +33,13 @@
         while ($row = mysqli_fetch_assoc($result)) {
           echo '<tr>';
           echo '<td>' . $no++ . '</td>';
-          echo '<td><img src="' . htmlspecialchars($row['coverImage']) . '" alt="Cover" style="width:60px;height:60px;object-fit:cover;"></td>';
+          echo '<td><img src="../../templates/covers/' . htmlspecialchars($row['coverImage']) . '" alt="Cover" style="width:60px;height:60px;object-fit:cover;"></td>';
           echo '<td>' . htmlspecialchars($row['templateName']) . '</td>';
           echo '<td>' . htmlspecialchars($row['author']) . '</td>';
           echo '<td>' . htmlspecialchars($row['approvalStatus']) . '</td>';
           echo '<td>' . htmlspecialchars(date('d M Y', strtotime($row['createdAt']))) . '</td>';
           echo '<td>
-            <a href="download_template.php?id=' . $row['id'] . '" class="btn btn-info btn-sm ">Download</a>
+            <a href="../download-template.php?id=' . $row['id'] . '" class="btn btn-info btn-sm ">Download</a>
             <a href="delete_template.php?id=' . $row['id'] . '" class="btn btn-success btn-sm" onclick="return confirm(\'Are you sure you want to approve this template?\')">Approve</a>
             <a href="delete_template.php?id=' . $row['id'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to reject this template?\')">Reject</a>
             <button class="btn btn-warning text-dark btn-sm" data-bs-toggle="modal" data-bs-target="#templateModal' . $row['id'] . '">Detail</button>
@@ -51,16 +51,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <img src="' . htmlspecialchars($row['coverImage']) . '" alt="Cover" class="img-fluid mb-3" style="max-width: 100%; height: auto;">
+                     <img src="../../templates/covers/' . htmlspecialchars($row['coverImage']) . '" alt="Cover" class="img-fluid mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                     <p><strong>Author:</strong> ' . htmlspecialchars($row['author']) . '</p>
                     <p><strong>Like Count:</strong> ' . (int)$row['likeCount'] . '</p>
                     <p><strong>Download Count:</strong> ' . (int)$row['downloadCount'] . '</p>
                     <p><strong>Created At:</strong> ' . htmlspecialchars($row['createdAt']) . '</p>
-                    <p><strong>Description:</strong> ' . htmlspecialchars($row['deskripsi']) . '</p>
+                    <p><strong>Description:</strong> ' . $row['deskripsi'] . '</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="download_template.php?id=' . $row['id'] . '" class="btn btn-primary">Download Template</a>
+                    <a href="../download-template.php?id=' . $row['id'] . '" class="btn btn-success"><i class="bi bi-download"></i> Download Template</a>
                   </div>
                   </div>
                 </div>

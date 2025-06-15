@@ -57,11 +57,11 @@ if (isset($_POST['daftarUser'])) {
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" name="password" required>
+          <input type="password" class="form-control" id="password" name="password" required pattern=".{8,}" title="minimal password 8 karakter">
         </div>
         <div class="mb-3">
           <label for="confirm_password" class="form-label">Konfirmasi Password</label>
-          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+          <input type="password" class="form-control" id="confirm_password" name="confirm_password" required pattern=".{8,}" title="minimal password 8 karakter">
         </div>
         <button type="submit" class="btn btn-primary w-100" name="daftarUser">Daftar</button>
       </form>

@@ -27,6 +27,51 @@
   </div>
 </section>
 
+<!-- FAQ Section -->
+<section class="faq-section py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Pertanyaan yang Sering Diajukan (FAQ)</h2>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Apa itu FreeForma?
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            FreeForma adalah platform yang menyediakan berbagai template dokumen akademik gratis untuk mahasiswa, dosen, dan peneliti.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Bagaimana cara mengunduh template?
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Anda dapat mengunjungi halaman Templates, memilih template yang diinginkan, dan mengklik tombol unduh.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Apakah saya bisa berkontribusi dengan template saya sendiri?
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Tentu! Anda dapat mengirimkan template Anda melalui formulir kontribusi di halaman Templates.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Contact Section -->
 <section class="contact-section py-5">
   <div class="container">

@@ -23,8 +23,8 @@
       <div class="col-lg-4">
         <h5 class="mb-3">Hubungi Kami</h5>
         <ul class="list-unstyled">
-          <li><a href="about.php?title=Tentang" class="text-white">Tentang Kami</a></li>
-          <li><a href="about.php?title=Tentang" class="text-white">FAQ</a></li>
+          <li><a href="../about.php?title=Tentang" class="text-white">Tentang Kami</a></li>
+          <li><a href="../about.php?title=Tentang" class="text-white">FAQ</a></li>
         </ul>
       </div>
     </div>
