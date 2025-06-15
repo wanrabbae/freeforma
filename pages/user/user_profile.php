@@ -19,13 +19,13 @@
         <div class="collapse navbar-collapse d-flex justify-content-center mx-3" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 mb-lg-0">
             <li class="nav-item me-3">
-              <a class="nav-link" aria-current="page" href="#">Template</a>
+              <a class="nav-link" aria-current="page" href="user_template_generator.php">Generator Template</a>
             </li>
             <li class="nav-item me-3">
-              <a class="nav-link" href="#">Contribution Template</a>
+              <a class="nav-link" href="user_kontribusi_template.php">Contribution Template</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#">User Profile</a>
+              <a class="nav-link active" href="user_profile.php">Profile</a>
             </li>
           </ul>
         </div>
@@ -159,43 +159,54 @@
       </div>
     </div>
   </div>
-<footer class="bg-dark text-white text-center py-5 mt-5 w-100" style="position: relative; left: 0; right: 0;">
+<footer class="bg-dark text-white text-center py-5 mt-5 w-100">
   <div class="container-fluid px-0">
     <div class="row align-items-center mx-0">
+      
+      <!-- Kontak -->
       <div class="col-12 col-md-4 mb-3 mb-md-0">
-        <div class="fw-bold mb-2">Contact Us</div>
+        <h5 class="fw-bold mb-3">Contact Us</h5>
         <a href="https://x.com/username" target="_blank" class="text-white mx-2" title="X / Twitter">
-          <i class="bi bi-twitter-x" style="font-size: 2rem;"></i>
+          <i class="bi bi-twitter-x fs-3"></i>
         </a>
         <a href="https://instagram.com/username" target="_blank" class="text-white mx-2" title="Instagram">
-          <i class="bi bi-instagram" style="font-size: 2rem;"></i>
+          <i class="bi bi-instagram fs-3"></i>
         </a>
         <a href="https://wa.me/6281234567890" target="_blank" class="text-white mx-2" title="WhatsApp">
-          <i class="bi bi-whatsapp" style="font-size: 2rem;"></i>
+          <i class="bi bi-whatsapp fs-3"></i>
         </a>
         <a href="tel:+6281234567890" class="text-white mx-2" title="Telepon">
-          <i class="bi bi-telephone" style="font-size: 2rem;"></i>
+          <i class="bi bi-telephone fs-3"></i>
         </a>
-        <a href="mailto:cs@freeforma.com" class="text-white mx-2" title="Customer Service Email">
-          <i class="bi bi-envelope" style="font-size: 2rem;"></i>
+        <a href="mailto:cs@freeforma.com" class="text-white mx-2" title="Email">
+          <i class="bi bi-envelope fs-3"></i>
         </a>
       </div>
+
+      <!-- Layanan -->
       <div class="col-12 col-md-4 mb-3 mb-md-0">
-        <div class="fw-bold mb-2">Service</div>
-        <div>
-          <a href="#" class="text-white mx-2 text-decoration-none">FAQ</a> |
-          <a href="#" class="text-white mx-2 text-decoration-none">Help</a> |
-          <a href="#" class="text-white mx-2 text-decoration-none">About FreeForma</a>
-        </div>
+        <h5 class="fw-bold mb-3">Service</h5>
+        <a href="#" class="text-white text-decoration-none mx-2">FAQ</a> |
+        <a href="#" class="text-white text-decoration-none mx-2">Help</a> |
+        <a href="#" class="text-white text-decoration-none mx-2">About FreeForma</a>
       </div>
+
+      <!-- Logout -->
       <div class="col-12 col-md-4">
-        <button onclick="window.location.href='logout.php'" class="btn btn-success fw-bold px-4 py-2 mt-2">
-          <i class="bi bi-box-arrow-right me-2"></i>Get Out Application Now
-        </button>
+        <a href="logout.php" class="btn btn-danger d-inline-flex align-items-center">
+          <i class="fas fa-sign-out-alt me-2"></i> Logout
+        </a>
       </div>
+
     </div>
+
     <hr class="bg-secondary my-4">
-    <small style="font-size:1.1rem;">&copy; 2025 FreeForma. All rights reserved.</small>
+
+    <div>
+      <small class="text-white-50" style="font-size: 1.1rem;">
+        &copy; 2025 FreeForma. All rights reserved.
+      </small>
+    </div>
   </div>
 </footer>
 
