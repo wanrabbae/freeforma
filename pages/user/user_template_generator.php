@@ -20,6 +20,8 @@ include '../koneksi.php';
     crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="icon" href="../../assets/logo-dark.png" type="image/png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -52,36 +54,39 @@ include '../koneksi.php';
     </div>
   </nav>
 
-  <div class="container my-5">
+  <div class="container mt-3 mb-5">
+    <h3 class="text-center">Laporan Artikel <i class="fas fa-arrow-right"></i> Jurnal SEICT <img src="../../assets/seict.png" alt="SEICT" width="50"></h3>
     <div class="row g-4 justify-content-center">
       <!-- Card kiri: Preview Template FreeForma dari file di database/server -->
       <div class="col-12 col-md-6">
-        <div class="card border-success shadow-sm h-100">
-          <div class="card-header bg-success text-white fw-bold text-center">
-            Template FreeForma
+        <div class="card border-primary shadow-sm h-100">
+          <div class="card-header bg-primary text-white fw-bold text-center">
+            Upload Laporan Artikel
           </div>
           <div class="card-body">
-            <div id="templatePreview" class="text-center" style="min-height: 200px;">
-              <!-- Contoh: jika file template PDF -->
+            <form id="uploadForm">
+              <div class="mb-3">
+                <label for="userFile" class="form-label">Upload File (PDF)</label>
+                <input type="file" class="form-control" id="userFile" accept=".pdf" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100 fw-bold">Upload & Preview</button>
+            </form>
+            <div id="filePreview" class="mt-4" style="min-height: 200px; max-height: 400px; overflow-y: auto; object-fit: cover;">
+              <!-- <div class="text-center text-muted">Preview halaman pertama akan muncul di sini setelah upload.</div> -->
             </div>
           </div>
         </div>
       </div>
       <!-- Card Upload File User tetap -->
       <div class="col-12 col-md-6">
-        <div class="card border-primary shadow-sm h-100">
-          <div class="card-header bg-primary text-white fw-bold text-center">
-            Upload File Anda
+        <div class="card border-success shadow-sm h-100">
+          <div class="card-header bg-success text-white fw-bold text-center">
+            Download Hasil Template SEICT
           </div>
           <div class="card-body">
-            <form id="uploadForm">
-              <div class="mb-3">
-                <label for="userFile" class="form-label">Upload File (PDF/DOC/DOCX)</label>
-                <input type="file" class="form-control" id="userFile" accept=".pdf,.doc,.docx" required>
-              </div>
-              <button type="submit" class="btn btn-primary w-100 fw-bold">Upload & Preview</button>
-            </form>
-            <div id="filePreview" class="mt-4"></div>
+            <div id="templatePreview" class="text-center" style="min-height: 200px;">
+
+            </div>
           </div>
         </div>
       </div>
@@ -98,6 +103,9 @@ include '../koneksi.php';
         <div id="alertArea"></div>
       </div>
     </div>
+
+
+    <h3 class="text-center mt-5">Jurnal ICT Research and Applications (ITB) <i class="fas fa-arrow-right"></i> Jurnal SEICT <img src="../../assets/seict.png" alt="SEICT" width="50"></h3>
   </div>
 
   <br />
@@ -105,47 +113,115 @@ include '../koneksi.php';
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/mammoth/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+
   <script>
-    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    const uploadForm = document.getElementById("uploadForm");
+    const userFileInput = document.getElementById("userFile");
+    const filePreview = document.getElementById("filePreview");
+    const btnGenerate = document.getElementById("btnGenerate");
+    const templatePreview = document.getElementById("templatePreview");
+    const alertArea = document.getElementById("alertArea");
+
+    let uploadedPdfUrl = null;
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+    uploadForm.addEventListener("submit", function(e) {
       e.preventDefault();
-      const fileInput = document.getElementById('userFile');
-      const file = fileInput.files[0];
-      if (!file) return;
 
-      const templatePreview = document.getElementById('templatePreview');
-      const filePreview = document.getElementById('filePreview');
-      filePreview.innerHTML = '';
+      const file = userFileInput.files[0];
+      if (!file || file.type !== "application/pdf") {
+        alert("Mohon upload file PDF yang valid.");
+        return;
+      }
 
-      // Preview PDF
-      if (file.type === "application/pdf") {
-        const url = URL.createObjectURL(file);
-        templatePreview.innerHTML = `<embed src="${url}" type="application/pdf" width="100%" height="500px" style="border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);"/>`;
-      }
-      // Preview DOC/DOCX (hanya nama file, karena browser tidak bisa render docx langsung)
-      else if (
-        file.type === "application/msword" ||
-        file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ) {
-        templatePreview.innerHTML = `
-          <div class="alert alert-info">
-            <i class="bi bi-file-earmark-word" style="font-size:2rem"></i><br>
-            <strong>File DOC/DOCX:</strong> ${file.name}<br>
-            <span class="text-muted">Preview langsung file Word tidak didukung browser.<br>Silakan download untuk melihat isi.</span>
-          </div>`;
-      }
-      // File tidak didukung
-      else {
-        templatePreview.innerHTML = `<div class="alert alert-danger">Format file tidak didukung. Hanya PDF atau DOC/DOCX.</div>`;
-      }
+      const fileReader = new FileReader();
+      fileReader.onload = function() {
+        const typedarray = new Uint8Array(this.result);
+
+        pdfjsLib.getDocument(typedarray).promise.then(pdf => {
+          uploadedPdfUrl = URL.createObjectURL(file);
+
+          let previewHtml = '<div class="text-center fw-bold mb-2">Preview Halaman Pertama</div>';
+          pdf.getPage(1).then(page => {
+            const scale = 1.2;
+            const viewport = page.getViewport({
+              scale
+            });
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            page.render({
+              canvasContext: context,
+              viewport: viewport
+            }).promise.then(() => {
+              filePreview.innerHTML = '';
+              filePreview.appendChild(canvas);
+            });
+          });
+        }).catch(err => {
+          console.error("PDF preview error:", err);
+          filePreview.innerHTML = "<div class='text-danger'>Gagal memuat pratinjau file PDF.</div>";
+        });
+      };
+
+      fileReader.readAsArrayBuffer(file);
     });
 
-    // Handler tombol Generate & Convert
-    document.getElementById('btnGenerate').addEventListener('click', function() {
-      // Silakan ganti aksi berikut sesuai kebutuhan backend/konversi file
-      alert('Proses generate & convert file 1 dan 2 dimulai!');
-      // Contoh: bisa AJAX ke backend untuk proses konversi, dsb.
+    btnGenerate.addEventListener("click", function() {
+      if (!uploadedPdfUrl) {
+        alert("Harap unggah file laporan artikel terlebih dahulu.");
+        return;
+      }
+
+      btnGenerate.disabled = true;
+      btnGenerate.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengonversi...`;
+
+      alertArea.innerHTML = `
+      <div class="alert alert-warning text-center" role="alert">
+        Sedang memproses konversi ke template SEICT... Mohon tunggu 10 detik.
+      </div>`;
+
+      setTimeout(() => {
+        fetch("../../templates/files/Converted_SEICT_Doc.docx")
+          .then(response => response.blob())
+          .then(blob => {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+              mammoth.convertToHtml({
+                  arrayBuffer: event.target.result
+                })
+                .then(result => {
+                  templatePreview.innerHTML = `
+                  <div class="text-center fw-bold mb-2">Preview Hasil Template SEICT (.docx)</div>
+                  <div class="border p-3" style="background-color:#f8f9fa; max-height: 400px; overflow-y: auto;">${result.value}</div>
+                  <a href="../../templates/files/Converted_SEICT_Doc.docx" class="btn btn-outline-success mt-3" download>
+                    <i class="bi bi-download me-2"></i>Download File .DOCX
+                  </a>`;
+                })
+                .catch(err => {
+                  console.error("DOCX render error:", err);
+                  templatePreview.innerHTML = "<div class='text-danger'>Gagal memuat hasil template DOCX.</div>";
+                });
+            };
+            reader.readAsArrayBuffer(blob);
+          });
+
+        alertArea.innerHTML = `
+        <div class="alert alert-success text-center" role="alert">
+          Konversi berhasil! Template SEICT berhasil ditampilkan.
+        </div>`;
+
+        btnGenerate.disabled = false;
+        btnGenerate.innerHTML = `<i class="bi bi-arrow-repeat me-2"></i>Generate & Convert`;
+      }, 10000);
     });
   </script>
+
 </body>
 
 </html>
